@@ -46,21 +46,30 @@ const Budget = () => {
         } else {
             alert(message);
             setError(message);
-            
+
         }
     };
 
     return (
-        <div className="alert alert-secondary">
-            <div className="input-group rounded">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">Budget: {currency}</span>
+        <div className="card bg-secondary-subtle">
+            <div className="card-header text-center text-dark">
+                <h5>Budget</h5>
+            </div>
+            <div className="card-body">
+                <div className="form-floating rounded">
+                    <label htmlFor='budget' style={{ paddingLeft: '2.5rem', color: 'black' }}>Amount</label>
+                    <div className="input-group">
+                        <div className="input-group-prepend border-0 rounded-0">
+                            <span className="input-group-text bg-secondary-subtle text-dark" style={{ backgroundColor: 'transparent' }}>{currency}</span>
+                        </div>
+                        <input id='budget' type="number" className={`form-control bg-secondary-subtle text-dark ${error ? 'is-invalid' : ''}`} step="10" value={newBudget} onChange={handleBudgetChange} placeholder="Enter your budget" style={{ paddingLeft: '2.5rem', borderLeft: '0' }} />
+                    </div>
+                    {error && <div className="invalid-feedback text-dark">{error}</div>}
                 </div>
-                <input type="number" className={`form-control ${error ? 'is-invalid' : ''}`} step="10" value={newBudget} onChange={handleBudgetChange} placeholder="Enter your budget" />
-                {error && <div className="invalid-feedback">{error}</div>}
             </div>
         </div>
     );
+
 };
 
 export default Budget;
