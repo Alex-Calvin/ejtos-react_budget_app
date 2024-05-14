@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import { TiDelete } from 'react-icons/ti';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp, faChevronDown, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { AppContext } from '../context/AppContext';
 
 const ExpenseItem = (props) => {
-    const { dispatch } = useContext(AppContext);
+    const { dispatch, currency } = useContext(AppContext);
 
     const handleDeleteExpense = () => {
         dispatch({
@@ -42,10 +41,10 @@ const ExpenseItem = (props) => {
     return (
         <tr>
         <td>{props.name}</td>
-        <td>${props.cost}</td>
-        <td><button class="btn btn-success btn-circle rounded-circle" onClick={event=> increaseAllocation(props.name)}><FontAwesomeIcon icon={faChevronUp}/></button></td>
-        <td><button class="btn btn-danger btn-circle rounded-circle" onClick={event => decreaseAllocation(props.name)}><FontAwesomeIcon icon={faChevronDown}/></button></td>
-        <td><TiDelete size='1.5em' onClick={handleDeleteExpense}></TiDelete></td>
+        <td>{currency}{props.cost}</td>
+        <td><button className='btn btn-success btn-circle rounded-circle' onClick={event=> increaseAllocation(props.name)}><FontAwesomeIcon icon={faChevronUp}/></button></td>
+        <td><button className='btn btn-danger btn-circle rounded-circle' onClick={event => decreaseAllocation(props.name)}><FontAwesomeIcon icon={faChevronDown}/></button></td>
+        <td><button className='btn btn-circle rounded-circle' onClick={handleDeleteExpense}><FontAwesomeIcon icon={faTrash}/></button></td>
         </tr>
     );
 };
