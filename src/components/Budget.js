@@ -4,14 +4,25 @@ import { AppContext } from '../context/AppContext';
 const Budget = () => {
     const { budget } = useContext(AppContext);
     const [newBudget, setNewBudget] = useState(budget);
+    
     const handleBudgetChange = (event) => {
-        setNewBudget(event.target.value);
+        let val = event.target.value
+
+
+            setNewBudget(val);
+
+        
     }
+    
     return (
-<div className='alert alert-secondary'>
-<span>Budget:&nbsp;$&nbsp;</span>
-<input type="number" step="10" value={newBudget} onChange={handleBudgetChange}></input>
-</div>
+        <div className="alert alert-secondary">
+            <div className='input-group rounded'>
+                <div className="input-group-prepend">
+                    <span className="input-group-text">Budget: $</span>
+                </div>
+                <input type="number" className="form-control" step="10" value={newBudget} onChange={handleBudgetChange}></input>
+            </div> 
+        </div>
     );
 };
 export default Budget;
