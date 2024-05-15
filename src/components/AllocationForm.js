@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AllocationForm = (props) => {
     const { dispatch, remaining, currency } = useContext(AppContext);
@@ -7,36 +8,34 @@ const AllocationForm = (props) => {
     const [name, setName] = useState('');
     const [cost, setCost] = useState('');
     const [action, setAction] = useState('');
-    const [modified, setModified] = useState('');
+    const [modified, setModified] = useState(false);
 
     const validation = (val) => {
         let isValid = /^\d+$/.test(val);
-        return isValid
-    }
+        return isValid;
+    };
 
     const handleBlur = () => {
         setModified(true);
-    }
+    };
 
     const handleChange = (event) => {
-        let val = event.target.value
+        let val = event.target.value;
 
         if (val === '' || validation(val)) {
-            setCost(val)
+            setCost(val);
         }
-
-    }
+    };
 
     const submitEvent = () => {
-
         if (!validation(cost)) {
-            alert("The value is not a valid number.")
+            alert("The value is not a valid number.");
             setCost("");
             return;
         }
 
         if (cost > remaining) {
-            alert(`The value cannot exceed remaining funds:  ${currency}${remaining}`);
+            alert(`Allocation cannot exceed remaining funds: ${currency}${remaining}`);
             setCost("");
             return;
         }
@@ -60,47 +59,38 @@ const AllocationForm = (props) => {
 
     return (
         <div>
-            <div className='row'>
-
-                <div className="input-group mb-3" style={{ marginLeft: '2rem' }}>
-                    <div className="input-group-prepend">
+            <div className="row mb-3">
+                <div className="col-md-12 d-flex">
+                    <div className="input-group flex-grow-1 me-2">
                         <label className="input-group-text" htmlFor="inputGroupSelect01">Department</label>
+                        <select className="form-select rounded-end" id="inputGroupSelect01" onChange={(event) => setName(event.target.value)}>
+                            <option defaultValue>Choose...</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Sales">Sales</option>
+                            <option value="Finance">Finance</option>
+                            <option value="HR">HR</option>
+                            <option value="IT">IT</option>
+                            <option value="Admin">Admin</option>
+                        </select>
                     </div>
-                    <select className="custom-select" id="inputGroupSelect01" onChange={(event) => setName(event.target.value)}>
-                        <option defaultValue>Choose...</option>
-                        <option value="Marketing" name="marketing"> Marketing</option>
-                        <option value="Sales" name="sales">Sales</option>
-                        <option value="Finance" name="finance">Finance</option>
-                        <option value="HR" name="hr">HR</option>
-                        <option value="IT" name="it">IT</option>
-                        <option value="Admin" name="admin">Admin</option>
-                    </select>
 
-                    <div className="input-group-prepend" style={{ marginLeft: '2rem' }}>
+                    <div className="input-group flex-grow-1 me-2">
                         <label className="input-group-text" htmlFor="inputGroupSelect02">Allocation</label>
+                        <select className="form-select rounded-end" id="inputGroupSelect02" onChange={(event) => setAction(event.target.value)}>
+                            <option defaultValue value="Add">Add</option>
+                            <option value="Reduce">Reduce</option>
+                        </select>
                     </div>
-                    <select className="custom-select" id="inputGroupSelect02" onChange={(event) => setAction(event.target.value)}>
-                        <option defaultValue value="Add" name="Add">Add</option>
-                        <option value="Reduce" name="Reduce">Reduce</option>
-                    </select>
 
-                    <input
-                        required='required'
-                        type='number'
-                        id='cost'
-                        value={cost}
-                        style={{ marginLeft: '2rem', size: 10 }}
-                        className={`form-control ${modified && !validation(cost) ? 'is-invalid' : ''}`}
-                        onChange={handleChange}
-                        onBlur={handleBlur}>
-                    </input>
+                    <div className="input-group flex-grow-1 me-2 position-relative">
+                        <label className="input-group-text" htmlFor="cost">{currency}</label>
+                        <input required type='number' id='cost' value={cost} className={`form-control rounded-end ${modified && !validation(cost) ? 'is-invalid' : ''}`} onChange={handleChange} onBlur={handleBlur} style={{ position: 'relative' }} />
+                        <div className="invalid-feedback" style={{ position: 'absolute', width: '100%', top: '100%', left: '0' }}>Please enter a valid number.</div>
+                    </div>
 
-                    <button className="btn btn-primary" onClick={submitEvent} style={{ marginLeft: '2rem' }}>
-                        Save
-                    </button>
+                    <button className="btn btn-primary flex-grow-1" onClick={submitEvent}>Save</button>
                 </div>
             </div>
-
         </div>
     );
 };

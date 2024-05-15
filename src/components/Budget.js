@@ -56,19 +56,16 @@ const Budget = () => {
                 <h5>Budget</h5>
             </div>
             <div className="card-body">
-                <div className="form-floating rounded">
-                    <label htmlFor='budget' style={{ paddingLeft: '2.5rem', color: 'black' }}>Amount</label>
-                    <div className="input-group">
-                        <div className="input-group-prepend border-0 rounded-0">
-                            <span className="input-group-text bg-secondary-subtle text-dark" style={{ backgroundColor: 'transparent' }}>{currency}</span>
-                        </div>
-                        <input id='budget' type="number" className={`form-control bg-secondary-subtle text-dark ${error ? 'is-invalid' : ''}`} step="10" value={newBudget} onChange={handleBudgetChange} placeholder="Enter your budget" style={{ paddingLeft: '2.5rem', borderLeft: '0' }} />
-                    </div>
+                <div className="input-group">
+                    <label className="input-group-text bg-secondary-subtle text-dark" htmlFor="budget">{currency}</label> {/* Label as prepend */}
+                    <input id='budget' type="number" className={`form-control rounded-end bg-secondary-subtle text-dark ${error ? 'is-invalid' : ''}`} step="10" value={newBudget} onChange={handleBudgetChange} placeholder="Enter your budget"
+                    />
                     {error && <div className="invalid-feedback text-dark">{error}</div>}
                 </div>
             </div>
         </div>
     );
+
 
 };
 
